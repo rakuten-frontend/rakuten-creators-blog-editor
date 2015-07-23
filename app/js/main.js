@@ -26,7 +26,7 @@ var FormArea = React.createClass({
   render: function() {
     return (
       <div className="container-fluid">
-        <TitleArea />
+        <TitleArea data={this.props.data} />
       </div>
     );
   }
@@ -43,11 +43,11 @@ var TitleArea = React.createClass({
       <form>
         <div className="form-group">
           <label for="exampleInputEmail1">Japanese</label>
-          <input type="text" className="form-control" id="title-ja" placeholder="日本語のタイトル" />
+          <input type="text" className="form-control" id="title-ja" placeholder="日本語のタイトル" value={this.props.data.title.ja} />
         </div>
         <div className="form-group">
           <label for="exampleInputPassword1">English</label>
-          <input type="text" className="form-control" id="title-en" placeholder="Title in English" />
+          <input type="text" className="form-control" id="title-en" placeholder="Title in English" value={this.props.data.title.en} />
         </div>
       </form>
      </div>
@@ -57,6 +57,6 @@ var TitleArea = React.createClass({
 });
 
 React.render(
-  <FormArea />,
+  <FormArea data={data} />,
   document.getElementById('mainArea')
 );
