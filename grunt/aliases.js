@@ -44,7 +44,7 @@ module.exports = {
     grunt.task.run([
       'newer:csslint',
       //'newer:jshint',
-      'newer:jscs'
+      //'newer:jscs'
     ]);
   },
 
