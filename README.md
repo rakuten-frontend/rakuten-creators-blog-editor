@@ -1,5 +1,10 @@
 # Blog Editor
 
+## ToDo
+
+* 入力のたびに、localStrage に保存して、呼び出せるように。
+* 
+
 ## Structure
 ```
 blog-editor/
