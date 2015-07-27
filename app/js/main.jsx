@@ -41,10 +41,10 @@ var Paragraph =  React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-xs-2">
           <h2>Paragraph</h2>
         </div>
-        <div className="col-md-5">
+        <div className="col-xs-5">
           <div className="form-group">
             <label>Japanese</label>
             <textarea className="form-control span4" placeholder="段落" required>
@@ -52,7 +52,7 @@ var Paragraph =  React.createClass({
             </textarea>
           </div>
         </div>
-        <div className="col-md-5">
+        <div className="col-xs-5">
           <div className="form-group">
             <label>English</label>
             <textarea className="form-control span4" placeholder="Paragraph" required>
@@ -86,10 +86,10 @@ var TitleArea = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-xs-2">
           <h2>Title</h2>
         </div>
-        <div className="col-md-10">
+        <div className="col-xs-10">
           <div className="form-group">
             <label for="exampleInputEmail1">Japanese</label>
             <input type="text" className="form-control" id="title-ja" placeholder="日本語のタイトル" value={this.props.data.title.ja} required />
@@ -120,45 +120,45 @@ var ProfileArea = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-xs-2">
           <h2>Profile</h2>
         </div>
-        <div className="col-md-10">
+        <div className="col-xs-10">
           <div className="form-group">
-            <label className="col-sm-2 control-label"></label>
-            <label className="col-sm-5 control-label">Japanese</label>
-            <label className="col-sm-5 control-label">English</label>
+            <label className="col-xs-2 control-label"></label>
+            <label className="col-xs-5 control-label">Japanese</label>
+            <label className="col-xs-5 control-label">English</label>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label text-right">Name</label>
-            <div className="col-sm-5 form-group">
+            <label className="col-xs-2 control-label text-right">Name</label>
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control" id="profile-name-ja" placeholder="楽天 太郎" value={this.state.name.ja} required onChange={this.onChange} name="name" lang="ja" />
             </div>
-            <div className="col-sm-5 form-group">
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control col-sm-5" id="profile-name-en" placeholder="Taro Rakuten" value={this.state.name.en} required onChange={this.onChange} name="name" lang="en" />
             </div>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label text-right">Title</label>
-            <div className="col-sm-5 form-group">
+            <label className="col-xs-2 control-label text-right">Title</label>
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control" id="profile-title-ja" placeholder="デザイナー、ディレクター等" value={this.state.title.ja} required name="title" lang="ja" onChange={this.onChange} />
             </div>
-            <div className="col-sm-5 form-group">
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control col-sm-5" id="profile-title-en" placeholder="Designer, Director, etc..." value={this.state.title.en} required name="title" lang="en" onChange={this.onChange} />
             </div>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label text-right">Department</label>
-            <div className="col-sm-5 form-group">
+            <label className="col-xs-2 control-label text-right">Department</label>
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control" id="profile-department-ja" placeholder="編成部" value={this.state.department.ja} required onChange={this.onChange} name="department" lang="ja" />
             </div>
-            <div className="col-sm-5 form-group">
+            <div className="col-xs-5 form-group">
               <input type="text" className="form-control col-sm-5" id="profile-department-en" placeholder="Creative & Web Design Department" value={this.state.department.en} required onChange={this.onChange} name="department" lang="en" />
             </div>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label text-right">Icon URL</label>
-            <div className="col-sm-10 form-group">
+            <label className="col-xs-2 control-label text-right">Icon URL</label>
+            <div className="col-xs-10 form-group">
               <input type="url" className="form-control" id="profile-icon" placeholder="http://rakutencreative.tumblr.com/your/icon/path.jpg" value={this.state.icon} onChange={this.onChange} name="icon" />
             </div>
           </div>
@@ -186,9 +186,9 @@ var AppendButtons = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-xs-2">
         </div>
-        <div className="col-md-10 text-center">
+        <div className="col-xs-10 text-center">
           <div className="form-group">
             <button className="btn btn-default" onClick={this.onClick} name={ContentType.Heading} >Add Heading</button>&nbsp;
             <button className="btn btn-default"  onClick={this.onClick} name={ContentType.Paragraph}>Add Paragraph</button>&nbsp;
