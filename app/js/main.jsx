@@ -201,11 +201,24 @@ var AppendButtons = React.createClass({
 });
 
 var FormArea = React.createClass({
+  componentDidMount: function() {
+    var temp = localStorage.getItem('data');
+    if (temp) {
+      data = JSON.parse(temp);
+      this.setState(data);
+      console.log('load');
+      console.log(data);
+    }
+  },
   getInitialState: function() {
     return {data: data};
   },
   update: function() {
+    // update
     this.setState(data);
+    // save
+    localStorage.setItem('data', JSON.stringify(data));
+    console.log('save', data);
   },
   render: function() {
     return (
