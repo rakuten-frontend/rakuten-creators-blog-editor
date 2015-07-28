@@ -12,7 +12,6 @@ var data = {
   contents: [
     {
       type: ContentType.Paragraph,
-      index: 0,
       summary: true,
       content: {
         ja: "",
@@ -49,28 +48,34 @@ var Paragraph =  React.createClass({
     data.contents[index]['summary'] = event.target.checked
     this.props.update();
   },
+  onClickedRemove: function(event) {
+    var index = event.currentTarget.dataset.index;
+    data.contents.splice(index, 1);
+    this.props.update();
+  },
   render: function() {
     return (
       <div className="row">
         <div className="col-xs-2">
           <h2>Paragraph</h2>
-          <div className="form-group">
+          <div className="form-group text-right">
             <label>
-              <input type="checkbox" data-index={this.props.content.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;
+              <input type="checkbox" data-index={this.props.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;
               Summary
             </label>
+            <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
           </div>
         </div>
         <div className="col-xs-5">
           <div className="form-group">
             <label>Japanese</label>
-            <textarea className="form-control span4" placeholder="段落" required value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.content.index} />
+            <textarea className="form-control span4" placeholder="段落" required value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
           </div>
         </div>
         <div className="col-xs-5">
           <div className="form-group">
             <label>English</label>
-            <textarea className="form-control span4" placeholder="Paragraph" required value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.content.index} />
+            <textarea className="form-control span4" placeholder="Paragraph" required value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
           </div>
         </div>
       </div>
@@ -82,9 +87,9 @@ var ContentList =  React.createClass({
   render: function() {
     return (
       <div>
-      {this.props.contents.map(function(content) {
+      {this.props.contents.map(function(content, index) {
         if (content.type === ContentType.Paragraph) {
-          return <Paragraph content={content} update={this.props.update} />
+          return <Paragraph content={content} update={this.props.update} index={index} />
         }
         else {
           return <div>{content.type}</div>;
@@ -188,7 +193,6 @@ var AppendButtons = React.createClass({
     // data handling
     data.contents.push({
       type: event.target.name,
-      index: data.contents.length,
       summary: false,
       content: {
         ja: "",
