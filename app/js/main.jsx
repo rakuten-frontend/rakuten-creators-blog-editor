@@ -36,7 +36,83 @@ var data = {
   }
 };
 
-var Paragraph =  React.createClass({
+var _renderContent = function() {
+  var type = this.props.content.type;
+  var paragraphBody = (
+    <div>
+      <div className="col-xs-5">
+        <div className="form-group">
+          <label>Japanese</label>
+          <textarea className="form-control span4" placeholder="段落" required value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
+        </div>
+      </div>
+      <div className="col-xs-5">
+        <div className="form-group">
+          <label>English</label>
+          <textarea className="form-control span4" placeholder="Paragraph" required value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
+        </div>
+      </div>
+    </div>
+  );
+  var headingBody = (
+    <div>
+      headingbody
+    </div>
+  );
+  var imageBody = (
+    <div>
+      imagebody
+    </div>
+  );
+  var contentBody;
+  if (type == ContentType.Heading) {
+    contentBody = headingBody;
+  }
+  else if (type == ContentType.Image) {
+    contentBody = imageBody;
+  }
+  else {
+    contentBody = paragraphBody;
+  }
+  return (
+    <div className="row">
+      <div className="col-xs-2">
+        <h2 className="text-capitalize">{this.props.content.type}</h2>
+        <div className="form-group text-right">
+          <label>
+            <input type="checkbox" data-index={this.props.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;
+            Summary
+          </label>
+          <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
+        </div>
+      </div>
+      {contentBody}
+    </div>
+  );
+};
+
+var Content = React.createClass({
+  onChange: function(event) {
+    var index = event.target.dataset.index;
+    var lang = event.target.lang;
+    data.contents[index]['content'][lang] = event.target.value;
+    this.props.update();
+  },
+  onClickedCheckbox: function(event) {
+    var index = event.target.dataset.index;
+    data.contents[index]['summary'] = event.target.checked
+    this.props.update();
+  },
+  onClickedRemove: function(event) {
+    var index = event.currentTarget.dataset.index;
+    data.contents.splice(index, 1);
+    this.props.update();
+  },
+  render: _renderContent
+});
+
+/*
+var Paragraph = React.createClass({
   onChange: function(event) {
     var index = event.target.dataset.index;
     var lang = event.target.lang;
@@ -82,19 +158,16 @@ var Paragraph =  React.createClass({
     );
   }
 });
+*/
 
 var ContentList =  React.createClass({
   render: function() {
     return (
       <div>
-      {this.props.contents.map(function(content, index) {
-        if (content.type === ContentType.Paragraph) {
-          return <Paragraph content={content} update={this.props.update} index={index} />
-        }
-        else {
-          return <div>{content.type}</div>;
-        }
-      }.bind(this))}
+        {this.props.contents.map(function(content, index) {
+          //return <Paragraph content={content} update={this.props.update} index={index} />
+          return <Content content={content} update={this.props.update} index={index} />
+         }.bind(this))}
       </div>
     );
   }
