@@ -4,6 +4,8 @@ const ContentType = {
   Heading:   'heading'
 };
 
+var localStorageKey = 'blog-editor-data';
+
 var data = {
   title: {
     ja: "",
@@ -108,7 +110,7 @@ var _renderContent = function() {
       <div className="col-xs-2">
         <h2 className="text-capitalize">{this.props.content.type}</h2>
         <div className="form-group text-right">
-          {summaryBody}
+          {summaryBody}<br />
           <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
         </div>
       </div>
@@ -325,7 +327,7 @@ var GenerationArea = React.createClass({
   },
   onClickDeleteAll: function(event) {
     if (window.confirm('Do you want to remove all data?')) {
-      localStorage.removeItem('data');
+      localStorage.removeItem(localStorageKey);
       location.reload();
     }
   },
@@ -354,7 +356,7 @@ var GenerationArea = React.createClass({
 
 var FormArea = React.createClass({
   componentDidMount: function() {
-    var temp = localStorage.getItem('data');
+    var temp = localStorage.getItem(localStorageKey);
     if (temp) {
       data = JSON.parse(temp);
       console.log('load');
@@ -369,7 +371,7 @@ var FormArea = React.createClass({
     // update
     this.setState({data: data});
     // save
-    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem(localStorageKey, JSON.stringify(data));
     console.log('save', data);
   },
   render: function() {
