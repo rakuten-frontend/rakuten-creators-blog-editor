@@ -15,7 +15,8 @@ var data = {
       summary: true,
       content: {
         ja: "",
-        en: ""
+        en: "",
+        url: ""
       }
     },
   ],
@@ -43,28 +44,47 @@ var _renderContent = function() {
       <div className="col-xs-5">
         <div className="form-group">
           <label>Japanese</label>
-          <textarea className="form-control span4" placeholder="段落" required value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
+          <textarea rows="5" className="form-control span4" placeholder="段落" required value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
         </div>
       </div>
       <div className="col-xs-5">
         <div className="form-group">
           <label>English</label>
-          <textarea className="form-control span4" placeholder="Paragraph" required value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
+          <textarea rows="5" className="form-control span4" placeholder="Paragraph" required value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
         </div>
       </div>
     </div>
   );
   var headingBody = (
-    <div>
-      headingbody
+    <div className="col-xs-10">
+      <div className="form-group">
+        <label for="exampleInputEmail1">Japanese</label>
+        <input type="text" className="form-control" placeholder="日本語の見出し" value={this.props.content.content.ja} required lang="ja" onChange={this.onChange} data-index={this.props.index} />
+      </div>
+      <div className="form-group">
+        <label for="exampleInputPassword1">English</label>
+        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} required required lang="en" onChange={this.onChange} data-index={this.props.index} />
+      </div>
     </div>
   );
   var imageBody = (
-    <div>
-      imagebody
+    <div className="col-xs-10">
+      <div className="form-group">
+        <label>Image URL</label>
+        <input type="url" className="form-control" placeholder="http://rakutencreative.tumblr.com/path/to/image.png" value={this.props.content.content.url} lang="url" onChange={this.onChange} data-index={this.props.index} />
+      </div>
+      <div className="form-group">
+        <label>Japanese</label>
+        <input type="text" className="form-control" placeholder="日本語のキャプション" value={this.props.content.content.ja} required lang="ja" onChange={this.onChange} data-index={this.props.index} />
+      </div>
+      <div className="form-group">
+        <label>English</label>
+        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} required required lang="en" onChange={this.onChange} data-index={this.props.index} />
+      </div>
     </div>
   );
   var contentBody;
+  var summaryBody = null;
   if (type == ContentType.Heading) {
     contentBody = headingBody;
   }
@@ -73,16 +93,18 @@ var _renderContent = function() {
   }
   else {
     contentBody = paragraphBody;
+    summaryBody = (
+      <label>
+        <input type="checkbox" data-index={this.props.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;Summary
+      </label>
+    );
   }
   return (
     <div className="row">
       <div className="col-xs-2">
         <h2 className="text-capitalize">{this.props.content.type}</h2>
         <div className="form-group text-right">
-          <label>
-            <input type="checkbox" data-index={this.props.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;
-            Summary
-          </label>
+          {summaryBody}
           <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
         </div>
       </div>
@@ -301,8 +323,11 @@ var GenerationArea = React.createClass({
       this.code = JSON.stringify(data);
       this.props.update();
     }
-    else {
-      //event.stopPropagation();
+  },
+  onClickDeleteAll: function(event) {
+    if (window.confirm('Do you want to remove all data?')) {
+      localStorage.removeItem('data');
+      location.reload();
     }
   },
   render: function() {
@@ -317,6 +342,10 @@ var GenerationArea = React.createClass({
           </div>
           <div className="form-group">
             <textarea className="form-control" readonly value={this.code} />
+          </div>
+          <hr />
+          <div className="form-group">
+            <button type="button" className="btn btn-danger" onClick={this.onClickDeleteAll}>Delete All</button>
           </div>
         </div>
       </div>
