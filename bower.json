@@ -2,6 +2,7 @@
   "name": "blog-editor",
   "private": true,
   "dependencies": {
-    "jquery": "~1.11.1"
+    "react": "~0.13.3",
+    "bootstrap": "~3.3.5"
   }
 }

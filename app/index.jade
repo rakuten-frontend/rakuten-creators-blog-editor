@@ -3,15 +3,23 @@ html
   head
     meta(charset='UTF-8')
     title Blog Editor
-    // build:css /css/app.css
+    // build:css css/app.css
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
     // bower:css
     // endbower
     link(rel='stylesheet', href='/css/main.css')
     // endbuild
   body
     h1 Blog Editor
-    // build:js /js/app.js
+
+    main(id="mainArea")
+      script(type="text/jsx", src='js/main.jsx')
+
+    // build:js js/app.js
     // bower:js
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/react/react.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
     // endbower
-    script(src='/js/main.js')
+    script(src='/bower_components/react/JSXTransformer.js')
     // endbuild

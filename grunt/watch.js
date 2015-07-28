@@ -24,10 +24,10 @@ module.exports = {
   },
 
   // Validate JavaScript
-  js: {
-    files: ['<%= path.js %>/**/*.js'],
-    tasks: ['newer:jshint', 'newer:jscs']
-  },
+  //js: {
+  // files: ['<%= path.js %>/**/*.js'],
+  //  tasks: ['newer:jshint', 'newer:jscs']
+  //},
 
   // Handle CSS files
   css: {
