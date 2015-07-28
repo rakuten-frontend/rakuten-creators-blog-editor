@@ -33,6 +33,10 @@ var data = {
     department: {
       ja: "編成部",
       en: "Creative & Web Design Department"
+    },
+    additionalHTML: {
+      ja: "",
+      en: ""
     }
   }
 };
@@ -264,9 +268,48 @@ var AppendButtons = React.createClass({
   }
 });
 
+var _generateParagraph = function(content) {
+  var summary = (content.summary) ? 'summary' : '';
+  // TODO: add paragraph element
+  return '<div class="txt '+summary+'"><div>'+content.content.ja+'</div><div lang="en">'+content.content.en+'</div></div>\n\n';
+};
+
+var _generateHeading = function(content) {
+  return '<div class="title"><h3><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></h3></div>\n\n';
+};
+
+var _generateImage = function(content) {
+  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p></div><div class="title"><h3><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></h3></div>\n\n';
+};
+
+var _generateProfiles = function(profiles) {
+  var s = '<div class="author"><ul>';
+  profiles.forEach(function(profile) {
+    s += '<li><p class="img"><img src="'+profile.icon+'" alt="'+profile.name.ja+' / '+profile.name.en+'" /></p><div class="name"><p>'+profile.name.ja+'<br />'+profile.title.ja+'<br />'+profile.department.ja+'</p><p lang="en" class="name">'+profile.name.en+'<br />'+profile.title.en+'<br />'+profile.department.en+'</p></div></li>';
+  });
+  s += '</ul></div>';
+  return s;
+};
+
 var _generateHtml = function(data) {
-  var code = '<div class="title"><h2><span>'+data.title.ja+'</span><span lang="en">'+data.title.en+'</span></h2></div>';
-  return code;
+  // title
+  var s = '<div class="title"><h2><span>'+data.title.ja+'</span><span lang="en">'+data.title.en+'</span></h2></div>\n\n';
+  // contents
+  data.contents.forEach(function(content) {
+    if (content.type == ContentType.Paragraph) {
+      s += _generateParagraph(content);
+    }
+    else if (content.type == ContentType.Heading) {
+      s += _generateHeading(content);
+    }
+    else if (content.type == ContentType.Image) {
+      s += _generateImage(content);
+    }
+    else {
+    }
+  });
+  s += _generateProfiles([data.profile]);
+  return s;
 };
 
 var GenerationArea = React.createClass({
@@ -276,8 +319,7 @@ var GenerationArea = React.createClass({
     var form = document.getElementsByTagName('form')[0];
     if ( form.checkValidity() ) {
       event.preventDefault();
-      //this.code = _generateHtml(data);
-      this.code = JSON.stringify(data)
+      this.code = _generateHtml(data);
       this.props.update();
     }
   },
