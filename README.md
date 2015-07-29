@@ -2,8 +2,10 @@
 
 ## ToDo
 
-* 入力のたびに、localStrage に保存して、呼び出せるように。
-* 
+* generated を readonly に
+* いくつか、required を削除
+* <p> を自動追加。
+
 
 ## Structure
 ```

@@ -81,11 +81,11 @@ var _renderContent = function() {
       </div>
       <div className="form-group">
         <label>Japanese</label>
-        <input type="text" className="form-control" placeholder="日本語のキャプション" value={this.props.content.content.ja} required lang="ja" onChange={this.onChange} data-index={this.props.index} />
+        <input type="text" className="form-control" placeholder="日本語のキャプション" value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
       </div>
       <div className="form-group">
         <label>English</label>
-        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} required required lang="en" onChange={this.onChange} data-index={this.props.index} />
+        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
       </div>
     </div>
   );
@@ -170,7 +170,7 @@ var TitleArea = React.createClass({
           </div>
           <div className="form-group">
             <label for="exampleInputPassword1">English</label>
-            <input type="text" className="form-control" id="title-en" placeholder="Title in English" value={this.props.data.title.en} required required lang="en" onChange={this.onChange} />
+            <input type="text" className="form-control" id="title-en" placeholder="Title in English" value={this.props.data.title.en} required lang="en" onChange={this.onChange} />
           </div>
         </div>
       </div>
@@ -323,6 +323,11 @@ var GenerationArea = React.createClass({
       event.preventDefault();
       this.code = _generateHtml(data);
       this.props.update();
+      var codeArea = document.getElementById('generatedCodeArea');
+      codeArea.focus();
+      setTimeout(function() {
+        codeArea.select();
+      }, 100);
     }
   },
   onClickDeleteAll: function(event) {
@@ -342,7 +347,7 @@ var GenerationArea = React.createClass({
             <button type="submit" className="btn btn-primary" onClick={this.onClick}>Generate Code</button>
           </div>
           <div className="form-group">
-            <textarea className="form-control" readonly value={this.code} />
+            <textarea id="generatedCodeArea" className="form-control" readOnly value={this.code} />
           </div>
           <hr />
           <div className="form-group">
