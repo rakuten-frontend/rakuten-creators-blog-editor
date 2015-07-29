@@ -144,7 +144,6 @@ var ContentList =  React.createClass({
     return (
       <div>
         {this.props.contents.map(function(content, index) {
-          //return <Paragraph content={content} update={this.props.update} index={index} />
           return <Content content={content} update={this.props.update} index={index} />
          }.bind(this))}
       </div>
@@ -272,8 +271,18 @@ var AppendButtons = React.createClass({
 
 var _generateParagraph = function(content) {
   var summary = (content.summary) ? 'summary' : '';
-  // TODO: add paragraph element
-  return '<div class="txt '+summary+'"><div>'+content.content.ja+'</div><div lang="en">'+content.content.en+'</div></div>\n\n';
+  var originals = [content.content.ja, content.content.en];
+  var contents = originals.map(function(paragraphs) {
+    var sentences = paragraphs.split(/\n/);
+    var result = '\n';
+    sentences.forEach(function(s) {
+      if (s.length > 0) {
+        result += '<p>'+s+'</p>\n';
+      }
+    });
+    return result;
+  });
+  return '<div class="txt '+summary+'"><div>'+contents[0]+'</div><div lang="en">'+contents[1]+'</div></div>\n\n';
 };
 
 var _generateHeading = function(content) {
