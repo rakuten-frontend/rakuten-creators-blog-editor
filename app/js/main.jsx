@@ -81,11 +81,11 @@ var _renderContent = function() {
       </div>
       <div className="form-group">
         <label>Japanese</label>
-        <input type="text" className="form-control" placeholder="日本語のキャプション" value={this.props.content.content.ja} required lang="ja" onChange={this.onChange} data-index={this.props.index} />
+        <input type="text" className="form-control" placeholder="日本語のキャプション" value={this.props.content.content.ja} lang="ja" onChange={this.onChange} data-index={this.props.index} />
       </div>
       <div className="form-group">
         <label>English</label>
-        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} required required lang="en" onChange={this.onChange} data-index={this.props.index} />
+        <input type="text" className="form-control" placeholder="Heading in English" value={this.props.content.content.en} lang="en" onChange={this.onChange} data-index={this.props.index} />
       </div>
     </div>
   );
@@ -144,7 +144,6 @@ var ContentList =  React.createClass({
     return (
       <div>
         {this.props.contents.map(function(content, index) {
-          //return <Paragraph content={content} update={this.props.update} index={index} />
           return <Content content={content} update={this.props.update} index={index} />
          }.bind(this))}
       </div>
@@ -170,7 +169,7 @@ var TitleArea = React.createClass({
           </div>
           <div className="form-group">
             <label for="exampleInputPassword1">English</label>
-            <input type="text" className="form-control" id="title-en" placeholder="Title in English" value={this.props.data.title.en} required required lang="en" onChange={this.onChange} />
+            <input type="text" className="form-control" id="title-en" placeholder="Title in English" value={this.props.data.title.en} required lang="en" onChange={this.onChange} />
           </div>
         </div>
       </div>
@@ -272,8 +271,18 @@ var AppendButtons = React.createClass({
 
 var _generateParagraph = function(content) {
   var summary = (content.summary) ? 'summary' : '';
-  // TODO: add paragraph element
-  return '<div class="txt '+summary+'"><div>'+content.content.ja+'</div><div lang="en">'+content.content.en+'</div></div>\n\n';
+  var originals = [content.content.ja, content.content.en];
+  var contents = originals.map(function(paragraphs) {
+    var sentences = paragraphs.split(/\n/);
+    var result = '\n';
+    sentences.forEach(function(s) {
+      if (s.length > 0) {
+        result += '<p>'+s+'</p>\n';
+      }
+    });
+    return result;
+  });
+  return '<div class="txt '+summary+'"><div>'+contents[0]+'</div><div lang="en">'+contents[1]+'</div></div>\n\n';
 };
 
 var _generateHeading = function(content) {
@@ -281,7 +290,7 @@ var _generateHeading = function(content) {
 };
 
 var _generateImage = function(content) {
-  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p></div><div class="title"><h3><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></h3></div>\n\n';
+  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p><p class="caption">'+content.content.ja+'</p><p lang="en" class="caption">'+content.content.en+'</p></div>\n\n';
 };
 
 var _generateProfiles = function(profiles) {
@@ -323,6 +332,11 @@ var GenerationArea = React.createClass({
       event.preventDefault();
       this.code = _generateHtml(data);
       this.props.update();
+      var codeArea = document.getElementById('generatedCodeArea');
+      codeArea.focus();
+      setTimeout(function() {
+        codeArea.select();
+      }, 100);
     }
   },
   onClickDeleteAll: function(event) {
@@ -342,7 +356,7 @@ var GenerationArea = React.createClass({
             <button type="submit" className="btn btn-primary" onClick={this.onClick}>Generate Code</button>
           </div>
           <div className="form-group">
-            <textarea className="form-control" readonly value={this.code} />
+            <textarea id="generatedCodeArea" className="form-control" readOnly value={this.code} />
           </div>
           <hr />
           <div className="form-group">
