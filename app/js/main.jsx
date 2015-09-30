@@ -290,7 +290,7 @@ var _generateHeading = function(content) {
 };
 
 var _generateImage = function(content) {
-  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p></div><div class="title"><h3><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></h3></div>\n\n';
+  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p><p class="caption">'+content.content.ja+'</p><p lang="en" class="caption">'+content.content.en+'</p></div>\n\n';
 };
 
 var _generateProfiles = function(profiles) {
