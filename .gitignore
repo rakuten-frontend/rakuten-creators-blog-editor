@@ -15,4 +15,4 @@ bower_components/
 
 # Excluding files from project
 .tmp/
-dist/
+up.sh
