@@ -90,8 +90,18 @@ var _renderContent = function() {
     </div>
   );
   var contentBody;
-  var summaryBody = null;
+  var optionBody = null;
   if (type == ContentType.Heading) {
+    optionBody = (
+      <div className="form-group text-right">
+        <label className="checkbox-inline">
+          <input type="radio" name={"level-"+this.props.index} value="h3" checked={this.props.content.level==="h3"} onChange={this.onClickedLevel} data-index={this.props.index} /> h3
+        </label>
+        <label className="checkbox-inline">
+          <input type="radio" name={"level-"+this.props.index} value="h4" checked={this.props.content.level==="h4"} onChange={this.onClickedLevel} data-index={this.props.index} /> h4
+        </label>
+      </div>
+    );
     contentBody = headingBody;
   }
   else if (type == ContentType.Image) {
@@ -99,7 +109,7 @@ var _renderContent = function() {
   }
   else {
     contentBody = paragraphBody;
-    summaryBody = (
+    optionBody = (
       <label>
         <input type="checkbox" data-index={this.props.index} checked={this.props.content.summary} onChange={this.onClickedCheckbox} />&nbsp;Summary
       </label>
@@ -110,7 +120,7 @@ var _renderContent = function() {
       <div className="col-xs-2">
         <h2 className="text-capitalize">{this.props.content.type}</h2>
         <div className="form-group text-right">
-          {summaryBody}<br />
+          {optionBody}<br />
           <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
         </div>
       </div>
@@ -128,12 +138,18 @@ var Content = React.createClass({
   },
   onClickedCheckbox: function(event) {
     var index = event.target.dataset.index;
-    data.contents[index]['summary'] = event.target.checked
+    data.contents[index]['summary'] = event.target.checked;
     this.props.update();
   },
   onClickedRemove: function(event) {
     var index = event.currentTarget.dataset.index;
     data.contents.splice(index, 1);
+    this.props.update();
+  },
+  onClickedLevel: function(event) {
+    var index = event.target.dataset.index;
+    var level = event.target.value;
+    data.contents[index]['level'] = level;
     this.props.update();
   },
   render: _renderContent
@@ -242,14 +258,18 @@ var AppendButtons = React.createClass({
   onClick: function(event) {
     event.preventDefault();
     // data handling
-    data.contents.push({
+    obj = {
       type: event.target.name,
       summary: false,
       content: {
         ja: "",
         en: ""
       }
-    });
+    };
+    if (event.target.name === ContentType.Heading) {
+      obj.level = 'h3';
+    }
+    data.contents.push(obj);
     this.props.update();
   },
   render: function() {
@@ -285,8 +305,9 @@ var _generateParagraph = function(content) {
   return '<div class="txt '+summary+'"><div>'+contents[0]+'</div><div lang="en">'+contents[1]+'</div></div>\n\n';
 };
 
-var _generateHeading = function(content) {
-  return '<div class="title"><h3><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></h3></div>\n\n';
+var _generateHeading = function(content, level) {
+  level = level || 'h3'
+  return '<div class="title"><'+content.level+'><span>'+content.content.ja+'</span><span lang="en">'+content.content.en+'</span></'+content.level+'></div>\n\n';
 };
 
 var _generateImage = function(content) {
