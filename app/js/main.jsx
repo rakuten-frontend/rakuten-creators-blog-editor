@@ -120,8 +120,14 @@ var _renderContent = function() {
       <div className="col-xs-2">
         <h2 className="text-capitalize">{this.props.content.type}</h2>
         <div className="form-group text-right">
-          {optionBody}<br />
+          {optionBody}
+        </div>
+        <div className="form-group text-right">
           <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} onClick={this.onClickedRemove} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
+        </div>
+        <div className="form-group text-right">
+          <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} data-way="up" onClick={this.onClickedMove} disabled={this.props.index==0} ><span className="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></button>
+          <button className="btn btn-default btn-xs" type="button" data-index={this.props.index} data-way="down" onClick={this.onClickedMove} disabled={this.props.index==data.contents.length-1} ><span className="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></button>
         </div>
       </div>
       {contentBody}
@@ -151,6 +157,30 @@ var Content = React.createClass({
     var level = event.target.value;
     data.contents[index]['level'] = level;
     this.props.update();
+  },
+  onClickedMove: function(event) {
+    var target = event.currentTarget;
+    var index = target.dataset.index;
+    var src = parseInt(index);
+    var dst = null;
+    if (target.dataset.way === 'up') {
+      if (src > 0) {
+        dst = src - 1;
+      }
+    }
+    else if (target.dataset.way === 'down') {
+      if (src < data.contents.length-1) {
+        dst = src + 1;
+      }
+    }
+    else {
+    }
+    if (dst !== null) {
+      var temp = data.contents[src];
+      data.contents[src] = data.contents[dst];
+      data.contents[dst] = temp;
+      this.props.update();
+    }
   },
   render: _renderContent
 });
