@@ -341,7 +341,7 @@ var _generateHeading = function(content, level) {
 };
 
 var _generateImage = function(content) {
-  return '<div class="fig"><p><img src="'+content.content.url+'" alt="" /></p><p class="caption">'+content.content.ja+'</p><p lang="en" class="caption">'+content.content.en+'</p></div>\n\n';
+  return '<div class="fig"><p><img src="'+content.content.url+'" alt="'+content.content.ja+' / '+content.content.en+'" /></p><p class="caption">'+content.content.ja+'</p><p lang="en" class="caption">'+content.content.en+'</p></div>\n\n';
 };
 
 var _generateProfiles = function(profiles) {
