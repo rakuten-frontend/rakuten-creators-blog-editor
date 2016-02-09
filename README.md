@@ -1,12 +1,5 @@
 # Blog Editor
 
-## ToDo
-
-* generated を readonly に
-* いくつか、required を削除
-* <p> を自動追加。
-
-
 ## Structure
 ```
 blog-editor/
