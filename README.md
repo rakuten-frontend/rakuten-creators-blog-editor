@@ -1,4 +1,11 @@
-# Blog Editor
+# Rakuten Creators Blog Editor
+
+> HTML generator for [Rakuten Creators Blog](http://rakutencreative.tumblr.com/) which is hosted on Tumblr.
+
+## Overview
+
+* This Web application enables you to generate an HTML source for Rakuten Creators Blog hosted on Tumblr from text.
+* This is my first application made with React.js. So the source code is durty and complicated.
 
 ## Structure
 ```
@@ -79,6 +86,10 @@ You don't need to update the reference manually.
 
 ### Search Packages
 [Bower - Search](http://bower.io/search/)
+
+## License
+
+Copyright (c) 2016 Rakuten, Inc. Licensed under the MIT License.
 
 ----
 
